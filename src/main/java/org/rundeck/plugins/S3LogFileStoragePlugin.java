@@ -159,7 +159,9 @@ public class S3LogFileStoragePlugin implements ExecutionFileStoragePlugin, AWSCr
             .findAny()
             .orElse(null);
 
-        if (null == awsregion) {
+        if (isEndpointSet()) {
+            awsregion = null; // Ignore region setting if endpoint is set
+        } else if (null == awsregion) {
             throw new IllegalArgumentException("Region was not found: " + getRegion());
         }
 
